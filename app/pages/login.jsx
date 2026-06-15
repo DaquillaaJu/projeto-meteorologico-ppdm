@@ -10,8 +10,10 @@ import {
   KeyboardAvoidingView,
   Platform,
   StatusBar,
+  Image,
+  ScrollView,
 } from 'react-native';
-import { cores, fontes, sombra, raio } from '../../constants/theme';
+import { cores, fontes } from '../../constants/theme';
 
 export default function Login({ navigation }) {
   const [usuario, setUsuario] = useState('');
@@ -46,88 +48,101 @@ export default function Login({ navigation }) {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={s.root}
     >
-      <StatusBar barStyle="light-content" backgroundColor={cores.fundoPrimario} />
+      <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
 
-      {/* Círculos decorativos de fundo */}
-      <View style={[s.circulo, s.circulo1]} />
-      <View style={[s.circulo, s.circulo2]} />
-      <View style={[s.circulo, s.circulo3]} />
+      {/* Decorative Grid Background */}
+      <View style={s.bgPattern} />
 
-      <Animated.View style={[s.card, { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }]}>
-
-        {/* Ícone do topo */}
-        <View style={s.iconeTopo}>
-          <Text style={s.iconeEmoji}>🌤️</Text>
-        </View>
-
-        <Text style={s.titulo}>Estação Meteorológica</Text>
-        <Text style={s.subtitulo}>Faça login para continuar</Text>
-
-        {/* Campo E-mail */}
-        <Text style={s.label}>E-MAIL</Text>
-        <View style={[s.inputBox, focusEmail && s.inputFocus]}>
-          <TextInput
-            style={s.input}
-            placeholder="seu@email.com"
-            placeholderTextColor={cores.textoMuted}
-            value={usuario}
-            onChangeText={setUsuario}
-            onFocus={() => setFocusEmail(true)}
-            onBlur={() => setFocusEmail(false)}
-            keyboardType="email-address"
-            autoCapitalize="none"
-          />
-        </View>
-
-        {/* Campo Senha */}
-        <Text style={[s.label, { marginTop: 14 }]}>SENHA</Text>
-        <View style={[s.inputBox, focusSenha && s.inputFocus]}>
-          <TextInput
-            style={s.input}
-            placeholder="••••••••"
-            placeholderTextColor={cores.textoMuted}
-            secureTextEntry
-            value={senha}
-            onChangeText={setSenha}
-            onFocus={() => setFocusSenha(true)}
-            onBlur={() => setFocusSenha(false)}
-          />
-        </View>
-
-        <TouchableOpacity style={s.esqueciBtn}>
-          <Text style={s.esqueciText}>Esqueceu a senha?</Text>
-        </TouchableOpacity>
-
-        {/* Botão Entrar */}
-        <Animated.View style={{ transform: [{ scale: btnScale }] }}>
-          <TouchableOpacity
-            style={s.btnEntrar}
-            onPress={() => navigation.replace('Inicio')}
-            onPressIn={onPressIn}
-            onPressOut={onPressOut}
-            activeOpacity={1}
-          >
-            <Text style={s.btnEntrarText}>ENTRAR</Text>
-          </TouchableOpacity>
-        </Animated.View>
-
-        {/* Divisor */}
-        <View style={s.divisorRow}>
-          <View style={s.divisorLinha} />
-          <Text style={s.divisorTexto}>ou</Text>
-          <View style={s.divisorLinha} />
-        </View>
-
-        {/* Botão Criar Conta */}
-        <TouchableOpacity
-          style={s.btnCriar}
-          onPress={() => navigation.navigate('Cadastro')}
-          activeOpacity={0.8}
+      <ScrollView
+        contentContainerStyle={s.scrollContainer}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+      >
+        <Animated.View 
+          style={[
+            s.card,
+            { opacity: fadeAnim, transform: [{ translateY: slideAnim }] }
+          ]}
         >
-          <Text style={s.btnCriarText}>CRIAR CONTA</Text>
-        </TouchableOpacity>
+          {/* Top Illustration Frame (Imagem Acima) */}
+          <View style={s.imageFrame}>
+            <Image 
+              source={require('../../assets/images/estacoes.png')}
+              style={s.illustration}
+              resizeMode="cover"
+            />
+            <View style={s.badgeOverlay}>
+              <Text style={s.badgeText}>ESTAÇÃO METEOROLÓGICA</Text>
+            </View>
+          </View>
 
-      </Animated.View>
+          {/* Form Content */}
+          <View style={s.formContent}>
+            <Text style={s.titulo}>Olá! Bem-vindo(a)</Text>
+            <Text style={s.subtitulo}>Ficamos felizes em te ver por aqui 🌤️</Text>
+
+            {/* Campo E-mail */}
+            <Text style={s.label}>E-MAIL</Text>
+            <TextInput
+              style={[s.input, focusEmail && s.inputFocus]}
+              placeholder="seu@email.com"
+              placeholderTextColor="#c9849a"
+              value={usuario}
+              onChangeText={setUsuario}
+              onFocus={() => setFocusEmail(true)}
+              onBlur={() => setFocusEmail(false)}
+              keyboardType="email-address"
+              autoCapitalize="none"
+            />
+
+            {/* Campo Senha */}
+            <Text style={[s.label, { marginTop: 14 }]}>SENHA</Text>
+            <TextInput
+              style={[s.input, focusSenha && s.inputFocus]}
+              placeholder="••••••••"
+              placeholderTextColor="#c9849a"
+              secureTextEntry
+              value={senha}
+              onChangeText={setSenha}
+              onFocus={() => setFocusSenha(true)}
+              onBlur={() => setFocusSenha(false)}
+            />
+
+            <TouchableOpacity style={s.esqueciBtn}>
+              <Text style={s.esqueciText}>Esqueceu a senha?</Text>
+            </TouchableOpacity>
+
+            {/* Botão Entrar */}
+            <Animated.View style={{ transform: [{ scale: btnScale }] }}>
+              <TouchableOpacity
+                style={s.btnEntrar}
+                onPress={() => navigation.replace('Inicio')}
+                onPressIn={onPressIn}
+                onPressOut={onPressOut}
+                activeOpacity={1}
+              >
+                <Text style={s.btnEntrarText}>ENTRAR</Text>
+              </TouchableOpacity>
+            </Animated.View>
+
+            {/* Divisor */}
+            <View style={s.divisorRow}>
+              <View style={s.divisorLinha} />
+              <Text style={s.divisorTexto}>ou</Text>
+              <View style={s.divisorLinha} />
+            </View>
+
+            {/* Botão Criar Conta */}
+            <TouchableOpacity
+              style={s.btnCriar}
+              onPress={() => navigation.navigate('Cadastro')}
+              activeOpacity={0.8}
+            >
+              <Text style={s.btnCriarText}>CRIAR CONTA</Text>
+            </TouchableOpacity>
+          </View>
+        </Animated.View>
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 }
@@ -135,131 +150,156 @@ export default function Login({ navigation }) {
 const s = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: cores.fundoPrimario,
+    backgroundColor: '#f5d0dc',
+  },
+  bgPattern: {
+    ...StyleSheet.absoluteFillObject,
+    opacity: 0.05,
+  },
+  scrollContainer: {
+    flexGrow: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 32,
+  },
+  card: {
+    backgroundColor: '#ffffff',
+    borderWidth: 3,
+    borderColor: '#8B2244',
+    // Hard neobrutalist shadow
+    shadowColor: '#8B2244',
+    shadowOffset: { width: 8, height: 8 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 0,
     overflow: 'hidden',
   },
-
-  // Círculos decorativos
-  circulo: {
+  imageFrame: {
+    width: '100%',
+    height: 180,
+    borderBottomWidth: 3,
+    borderColor: '#8B2244',
+    position: 'relative',
+  },
+  illustration: {
+    width: '100%',
+    height: '100%',
+  },
+  badgeOverlay: {
     position: 'absolute',
-    borderRadius: 9999,
-    backgroundColor: '#FFFFFF',
-    opacity: 0.06,
+    top: 12,
+    left: 12,
+    backgroundColor: '#c9567a',
+    borderWidth: 2,
+    borderColor: '#8B2244',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
   },
-  circulo1: { width: 320, height: 320, top: -100, right: -80 },
-  circulo2: { width: 220, height: 220, bottom: 60, left: -60 },
-  circulo3: { width: 140, height: 140, bottom: 200, right: -30 },
-
-  card: {
-    width: '88%',
-    backgroundColor: cores.cardFundo,
-    borderRadius: raio.xl,
-    paddingVertical: 36,
-    paddingHorizontal: 28,
-    ...sombra.card,
+  badgeText: {
+    color: '#ffffff',
+    fontSize: 9,
+    fontWeight: '900',
+    fontFamily: fontes.mono,
+    letterSpacing: 1,
   },
-
-  iconeTopo: {
-    alignSelf: 'center',
-    width: 64,
-    height: 64,
-    borderRadius: 32,
-    backgroundColor: cores.superficie,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 16,
+  formContent: {
+    padding: 24,
   },
-  iconeEmoji: { fontSize: 30 },
-
   titulo: {
-    fontSize: 20,
-    fontWeight: '700',
-    color: cores.textoEscuro,
-    textAlign: 'center',
+    fontSize: 22,
+    fontWeight: '900',
+    color: '#8B2244',
     fontFamily: fontes.sans,
     marginBottom: 4,
   },
   subtitulo: {
     fontSize: 13,
-    color: cores.textoMuted,
-    textAlign: 'center',
+    color: '#c9849a',
     fontFamily: fontes.sans,
-    marginBottom: 28,
+    marginBottom: 24,
   },
-
   label: {
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: '700',
-    color: cores.fundoSecundario,
+    color: '#8B2244',
     letterSpacing: 1.5,
     marginBottom: 6,
-    fontFamily: fontes.sans,
-  },
-  inputBox: {
-    borderWidth: 1.5,
-    borderColor: '#E2E8F0',
-    borderRadius: raio.md,
-    backgroundColor: '#F8FAFC',
-    paddingHorizontal: 14,
-    height: 50,
-    justifyContent: 'center',
-  },
-  inputFocus: {
-    borderColor: cores.fundoSecundario,
-    backgroundColor: '#FFFFFF',
+    fontFamily: fontes.mono,
   },
   input: {
-    fontSize: 15,
-    color: cores.textoCard,
+    width: '100%',
+    borderWidth: 2,
+    borderColor: '#8B2244',
+    backgroundColor: 'transparent',
+    padding: 12,
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#5a1a30',
     fontFamily: fontes.sans,
+    marginBottom: 12,
   },
-
-  esqueciBtn: { alignSelf: 'flex-end', marginTop: 8, marginBottom: 22 },
+  inputFocus: {
+    borderWidth: 3,
+    backgroundColor: '#fdf0f4',
+  },
+  esqueciBtn: {
+    alignSelf: 'flex-end',
+    marginBottom: 20,
+  },
   esqueciText: {
     fontSize: 12,
-    color: cores.acento,
+    color: '#8B2244',
     fontFamily: fontes.sans,
   },
-
   btnEntrar: {
-    backgroundColor: cores.fundoSecundario,
+    backgroundColor: '#c9567a',
+    borderWidth: 3,
+    borderColor: '#8B2244',
     height: 52,
-    borderRadius: raio.md,
     alignItems: 'center',
     justifyContent: 'center',
+    // Sombra do botão
+    shadowColor: '#8B2244',
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 0,
     marginBottom: 20,
   },
   btnEntrarText: {
     color: '#FFFFFF',
     fontSize: 14,
-    fontWeight: '700',
+    fontWeight: '900',
     letterSpacing: 2,
     fontFamily: fontes.sans,
   },
-
-  divisorRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 18 },
-  divisorLinha: { flex: 1, height: 1, backgroundColor: '#E2E8F0' },
+  divisorRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  divisorLinha: {
+    flex: 1,
+    height: 1,
+    backgroundColor: 'rgba(139, 34, 68, 0.2)',
+  },
   divisorTexto: {
     marginHorizontal: 12,
-    color: cores.textoMuted,
+    color: '#c9849a',
     fontSize: 13,
     fontFamily: fontes.sans,
   },
-
   btnCriar: {
     height: 52,
-    borderRadius: raio.md,
+    borderWidth: 2,
+    borderColor: '#8B2244',
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1.5,
-    borderColor: cores.fundoSecundario,
   },
   btnCriarText: {
-    color: cores.fundoSecundario,
+    color: '#8B2244',
     fontSize: 14,
-    fontWeight: '700',
+    fontWeight: '900',
     letterSpacing: 2,
     fontFamily: fontes.sans,
   },

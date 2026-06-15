@@ -13,6 +13,9 @@ import { LineChart, PieChart } from 'react-native-chart-kit';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { cores, fontes, sombra, raio } from '../../constants/theme';
 
+
+
+
 const PREVISAO = [
   { dia: 'Seg', icone: 'sunny',         max: 31, min: 22 },
   { dia: 'Ter', icone: 'partly-sunny',  max: 28, min: 21 },

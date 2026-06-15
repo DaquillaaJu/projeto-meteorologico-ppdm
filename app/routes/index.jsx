@@ -8,6 +8,7 @@ import Dashboard from '../pages/dashboard';
 import Registro from '../pages/registro';
 import Relatorio from '../pages/relatorio';
 import Cadastro from '../pages/cadastro';
+import RegistroDados from '../pages/registroDados';
 
 // import do tema
 import { cores } from '../../constants/theme';
@@ -36,6 +37,9 @@ function MenuSuperior() {
           if (route.name === 'Estação Meteorológica') {
             nomeIcone = focused ? 'cloud-sunny' : 'cloud-sunny-outline';
           }
+          if (route.name === 'Registrar Clima') {
+            nomeIcone = focused ? 'create' : 'create-outline';
+          }
           if (route.name === 'Cadastro') {
             nomeIcone = focused ? 'add-circle' : 'add-circle-outline';
           }
@@ -48,6 +52,7 @@ function MenuSuperior() {
       })}
     > 
       <Draw.Screen name='Estação Meteorológica' component={Dashboard} />
+      <Draw.Screen name='Registrar Clima' component={RegistroDados} />
       <Draw.Screen name='Cadastro' component={Cadastro} />
       <Draw.Screen name='Relatório' component={Relatorio} />
     </Draw.Navigator>
